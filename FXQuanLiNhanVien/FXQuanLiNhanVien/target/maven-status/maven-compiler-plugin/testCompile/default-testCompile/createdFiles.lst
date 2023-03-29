@@ -1,0 +1,5 @@
+com\nvn\account\AccountTester.class
+com\nvn\login\testsCaseLogin.class
+com\nvn\login\testCaseRegister.class
+com\nvn\service\loginservice.class
+com\nvn\service\registersevice.class

@@ -9,10 +9,11 @@ package com.pojo;
  * @author Joe
  */
 public class Account {
-    private int id;
+   
+    private int id ;
     private String accName;
     private String password;
-
+    
     public Account() {
     }
 

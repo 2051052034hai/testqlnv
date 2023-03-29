@@ -21,7 +21,7 @@
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (19,'PhuongNam','123'),(20,'AnhKhoi','456'),(21,'QuocKhanh','789'),(23,'TestData','abc'),(24,'abc','def'),(25,'lienminhhuyenthoai','thaygiaoba'),(26,'susan0175','anhtrungsadec'),(27,'BoVien@thaygiaoba','Panda123'),(28,'123456','789'),(31,'PhuongNam','147'),(33,'PhuongNam','songchohetdoithanhxuan');
+INSERT INTO `account` VALUES (19,'nam','PhuongNam','123'),(20,'khoi','AnhKhoi','456'),(21,'khanh','QuocKhanh','789');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 

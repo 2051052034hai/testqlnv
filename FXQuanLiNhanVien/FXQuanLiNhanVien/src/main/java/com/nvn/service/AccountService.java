@@ -5,6 +5,7 @@
 package com.nvn.service;
 import com.nvn.conf.JdbcUtils;
 import com.pojo.Account;
+import com.pojo.UserTest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,6 +49,16 @@ public class AccountService {
           stm1.executeUpdate(sql);
        }
    }
-   
-   
+   //phần viết thêm của bên nhóm test
+   public void addUserTest(UserTest u) throws SQLException{
+       try(Connection conn = JdbcUtils.getConn()){
+           PreparedStatement stm1 = conn.prepareStatement("INSERT INTO UserTest(username, password, phone, email, cofirmpass) VALUES(?,?,?,?,?)");
+           stm1.setString(1, u.getUsername());
+           stm1.setString(2, u.getPassword());
+           stm1.setString(3, u.getPhone());
+           stm1.setString(4, u.getEmail());
+           stm1.setString(5, u.getCofirmpass());
+           stm1.executeUpdate();
+       }
+   }
 }

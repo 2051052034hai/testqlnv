@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="txtName" prefHeight="599.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nvn.fxquanlinhanvien.registerController">
+   <children>
+      <TextField fx:id="txtUsername" layoutX="210.0" layoutY="151.0" prefHeight="31.0" prefWidth="326.0" />
+      <TextField fx:id="txtEmail" layoutX="210.0" layoutY="212.0" prefHeight="31.0" prefWidth="326.0" />
+      <Text layoutX="227.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ĐĂNG KÝ TÀI KHOẢN" wrappingWidth="276.517578125">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Text>
+      <Text layoutX="71.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên: " wrappingWidth="60.89794921875" />
+      <Text layoutX="71.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " wrappingWidth="60.89794921875" />
+      <Text layoutX="71.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="71.89794921875" />
+      <PasswordField fx:id="txtPassword" layoutX="210.0" layoutY="346.0" prefHeight="31.0" prefWidth="326.0" />
+      <Text layoutX="71.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CofirmPassword:" wrappingWidth="111.89794921875" />
+      <PasswordField fx:id="txtCofirmpass" layoutX="210.0" layoutY="412.0" prefHeight="31.0" prefWidth="326.0" />
+      <Button fx:id="txtbutton" layoutX="210.0" layoutY="465.0" mnemonicParsing="false" onAction="#handelClick" prefHeight="31.0" prefWidth="326.0" text="ĐĂNG KÝ" />
+      <Text layoutX="71.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: " wrappingWidth="60.89794921875" />
+      <TextField fx:id="txtPhone" layoutX="210.0" layoutY="284.0" prefHeight="31.0" prefWidth="326.0" />
+   </children>
+</AnchorPane>

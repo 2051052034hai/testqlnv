@@ -74,17 +74,20 @@ public class FXMLAccountController implements Initializable {
         this.tbvAccount.getColumns().addAll(colId,colaccName,colpass);
     }
     
+    @FXML
     public void addAccountHandler(ActionEvent event) throws SQLException{
         Account a = new Account(txtAccount.getText(),txtPass.getText());
         AccountService s = new AccountService();
         s.addAccount(a);
     }
     
+    @FXML
     public void delAccountHandler(ActionEvent event) throws SQLException{
         AccountService s = new AccountService();
         s.delAccount(Integer.parseInt(this.txtId.getText()));   
     }
 
+    @FXML
     public void refreshTable(ActionEvent event) throws SQLException{
        
        accountList.clear();
