@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,10 +37,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Joe
  */
 public class FXMLAccountController implements Initializable {
+    static AccountService as = new AccountService();
     @FXML private TableView<Account> tbvAccount;
     @FXML private TextField txtAccount;
     @FXML private TextField txtPass;
     @FXML private TextField txtId;
+    @FXML private TextField txtSearch;
+    
+    
     
     ObservableList<Account> accountList = FXCollections.observableArrayList();
     /** 
@@ -55,7 +60,21 @@ public class FXMLAccountController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLAccountController.class.getName()).log(Level.SEVERE, null, ex);
         }  
+        this.txtSearch.textProperty().addListener(e -> {
+            try {
+                this.loadTableData(this.txtSearch.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }    
+    private void loadTableData(String kw) throws SQLException {
+        
+        List<Account> ques = as.getAccounts(kw);
+        
+        this.tbvAccount.getItems().clear();
+        this.tbvAccount.setItems(FXCollections.observableList(ques));
+    }
     
     public void loadTableView(){
         TableColumn colId = new TableColumn("Mã TK");
@@ -105,5 +124,11 @@ public class FXMLAccountController implements Initializable {
             this.txtPass.setText("");
             
        }
+    }
+    @FXML
+    public void updateAccountHandler(ActionEvent event) throws SQLException {
+        AccountService s = new AccountService();
+        s.updateAccount(this.txtAccount.getText(),this.txtPass.getText(),Integer.parseInt(this.txtId.getText()));
+        
     }
 }

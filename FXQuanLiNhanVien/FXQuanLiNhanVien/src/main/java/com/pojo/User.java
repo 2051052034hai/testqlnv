@@ -9,7 +9,8 @@ package com.pojo;
  * @author Joe
  */
 public class User {
-    private int id;
+    private static int dem;
+    private int id=++dem;
     private String lastname;
     private String firstname;
     private int age;
@@ -27,7 +28,14 @@ public class User {
         this.phone = phone;
         this.id_account = id_account;
     }
-
+public User( String lastname, String firstname, int age, int phone, int id_account) {
+        
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.age = age;
+        this.phone = phone;
+        this.id_account = id_account;
+    }
     
     /**
      * @return the id
