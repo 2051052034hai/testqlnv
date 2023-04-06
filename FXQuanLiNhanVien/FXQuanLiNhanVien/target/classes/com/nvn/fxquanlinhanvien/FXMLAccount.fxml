@@ -19,7 +19,7 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtPass" layoutX="10.0" layoutY="53.0" prefHeight="26.0" prefWidth="350.0" promptText="Nhập mật khẩu">
+      <TextField fx:id="txtPass" layoutX="10.0" layoutY="53.0" prefHeight="26.0" prefWidth="350.0" promptText="Nhập mật khẩu ">
          <font>
             <Font size="15.0" />
          </font>
@@ -28,15 +28,21 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <TextField fx:id="txtId" prefHeight="37.0" prefWidth="600.0" promptText="Nhập mã nhân viên muốn xóa">
+      <TextField fx:id="txtSearch" promptText="Nhập tên nhân viên muốn tìm">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button layoutX="10.0" layoutY="133.0" mnemonicParsing="false" onAction="#delAccountHandler" prefHeight="0.0" prefWidth="95.0" text="Xóa" textAlignment="CENTER">
+      <TextField fx:id="txtId" prefHeight="37.0" prefWidth="600.0" promptText="Nhập mã nhân viên muốn xóa (Sửa)">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Button layoutX="10.0" layoutY="133.0" mnemonicParsing="false" onAction="#delAccountHandler" prefHeight="0.0" prefWidth="95.0" text="Xóa">
          <font>
             <Font size="15.0" />
          </font></Button>
+      <Button mnemonicParsing="false" onAction="#updateAccountHandler" prefHeight="25.0" prefWidth="94.0" text="Sửa" />
       <TableView fx:id="tbvAccount" prefHeight="140.0" prefWidth="570.0" />
       <Button layoutX="262.0" layoutY="250.0" mnemonicParsing="false" onAction="#refreshTable" prefHeight="0.0" prefWidth="95.0" text="Cập nhật" textAlignment="CENTER">
          <font>

@@ -5,13 +5,12 @@
 package com.nvn.account;
 
 import com.nvn.conf.JdbcUtils;
-import com.nvn.service.AccountService;
-import com.pojo.Account;
+import com.nvn.service.UserService;
+import com.pojo.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,17 +25,15 @@ import org.junit.jupiter.api.Test;
 
 /**
  *
- * @author Joe
+ * @author quynh
  */
-public class AccountTester {
-
+public class UserTester {
     private static Connection conn;
-    private static AccountService as;
-
+    private static UserService us;
     @BeforeAll
     public static void beforeAll() throws SQLException {
         conn = JdbcUtils.getConn();
-        as = new AccountService();
+        us = new UserService();
     }
 
     @AfterAll
@@ -45,28 +42,17 @@ public class AccountTester {
             conn.close();
         }
     }
-
-    /*@Test
-    public void testUnique() throws SQLException{
-        Statement stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery("SELECT * FROM account");
-        
-         while(rs.next()){
-             String accoutName = rs.getString("accName");
-             System.out.println(accoutName);
-         }
-       
-    }*/
+    
     @Test
-    public void testUniqueName() {
+    public void testUniqueID_Account() {
 
         
         try {
-            List<Account> accs = as.getAccounts();
+            List<User> user = us.getUser();
 
-            List<String> names = accs.stream().flatMap(c -> Stream.of(c.getAccName())).collect(Collectors.toList());
-            Set<String> testNames = new HashSet<>(names);
-            Assertions.assertEquals(names.size(), testNames.size());
+            List<Integer> ids= user.stream().flatMap(c -> Stream.of(c.getId_account())).collect(Collectors.toList());
+            Set<Integer> testIDs = new HashSet<>(ids);
+            Assertions.assertEquals(ids.size(), testIDs.size());
         } catch (SQLException ex) {
             Logger.getLogger(AccountTester.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,69 +61,76 @@ public class AccountTester {
     @Test
     public void testAddSuccessful() throws SQLException {
        
-        Account b = new Account(1001,"1001","1001");
+        User b = new User(4,"lam","thanh", 21, 1231242, 4);
         try {
-        boolean actual = as.addAccount(b);
+        boolean actual = us.addUser(b);
         Assertions.assertTrue(actual);
-        String sql = "SELECT * FROM account WHERE id=?";
+        String sql = "SELECT * FROM user WHERE id=?";
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setInt(1, b.getId());
             
             ResultSet rs = stm.executeQuery();
             Assertions.assertNotNull(rs.next());
-            Assertions.assertEquals("1001", rs.getString("accName"));
-            Assertions.assertEquals("1001", rs.getString("password"));
+            Assertions.assertEquals("lam", rs.getString("lastname"));
+            Assertions.assertEquals("thanh", rs.getString("firstname"));
+            Assertions.assertEquals("21", rs.getString("age"));
+            Assertions.assertEquals("123456", rs.getString("phone"));
+            Assertions.assertEquals("4", rs.getString("id_account"));
             } catch (SQLException ex) {
-            Logger.getLogger(AccountTester.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      @Test
     public void testSearch() {
         try {
-            List<Account> ac = as.getAccounts("khanh");
+            List<User> uc = us.getUser("thanh");
             
-            Assertions.assertEquals(1, ac.size());
-            for (Account a: ac)
-                Assertions.assertTrue(a.getAccName().contains("khanh"));
+            Assertions.assertEquals(1, uc.size());
+            for (User a: uc)
+                Assertions.assertTrue(a.getFirstname().contains("khanh"));
         } catch (SQLException ex) {
-            Logger.getLogger(AccountTester.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @Test
     public void testDelete() {
-        int id = 18;
+        int id = 3;
         boolean actual;
         try {
-            actual = as.delAccount(id);
+            actual = us.delUser(id);
             Assertions.assertTrue(actual);
             
-            String sql = "SELECT * FROM account WHERE id=?";
+            String sql = "SELECT * FROM user WHERE id=?";
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
             Assertions.assertFalse(rs.next());
         } catch (SQLException ex) {
-            Logger.getLogger(AccountTester.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     @Test
     public void testUpdate() {
         int id = 1;
         boolean actual;
         try {
-            actual = as.updateAccount("1001","1001",1);
+            actual = us.updateUser("lam","thanh", 1, 21, 123,1);
             Assertions.assertTrue(actual);
             
-            String sql = "SELECT * FROM account WHERE id=?";
+            String sql = "SELECT * FROM user WHERE id=?";
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setInt(1, id);
-            ResultSet rs = stm.executeQuery();
-            Assertions.assertFalse(rs.next());
-            Assertions.assertEquals("lam", rs.getString("accName"));
-            Assertions.assertEquals("thanh", rs.getString("password"));
             
+            ResultSet rs = stm.executeQuery();
+            Assertions.assertNotNull(rs.next());
+            Assertions.assertEquals("lam", rs.getString("lastname"));
+            Assertions.assertEquals("thanh", rs.getString("firstname"));
+            Assertions.assertEquals("21", rs.getString("age"));
+            Assertions.assertEquals("123456", rs.getString("phone"));
+            Assertions.assertEquals("4", rs.getString("id_account"));
         } catch (SQLException ex) {
-            Logger.getLogger(AccountTester.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

@@ -2,10 +2,12 @@ com\nvn\conf\JdbcUtils.class
 com\nvn\fxquanlinhanvien\FXMLAccountController.class
 com\nvn\fxquanlinhanvien\PrimaryController.class
 com\nvn\fxquanlinhanvien\registerController.class
+com\nvn\fxquanlinhanvien\FXMLUserController.class
 com\nvn\fxquanlinhanvien\SecondaryController.class
 com\nvn\service\AccountService.class
 com\dao\userTestDao.class
 com\pojo\UserTest.class
+com\nvn\service\UserService.class
 com\pojo\User.class
 module-info.class
 com\nvn\testCase\testThemNhanVien.class

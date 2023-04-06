@@ -9,8 +9,8 @@ package com.pojo;
  * @author Joe
  */
 public class Account {
-   
-    private int id ;
+    private static int dem;
+    private int id=++dem ;
     private String accName;
     private String password;
     

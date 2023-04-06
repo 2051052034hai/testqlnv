@@ -32,23 +32,69 @@ public class AccountService {
       return results;
      
    }
-   
-   public void addAccount(Account a) throws SQLException{
+
+//   public void addAccount(Account a) throws SQLException{
+//       try(Connection conn = JdbcUtils.getConn()){
+//           PreparedStatement stm1 = conn.prepareStatement("INSERT INTO account(id,accName,password) VALUES(?,?,?)");
+//           stm1.setInt(1, a.getId());
+//           stm1.setString(2, a.getAccName());
+//           stm1.setString(3, a.getPassword());
+//           stm1.executeUpdate();
+//       }
+//   }
+    //Chinh sua code de thuc hien them id cua nhom test
+   public boolean addAccount(Account a) throws SQLException{
        try(Connection conn = JdbcUtils.getConn()){
-           PreparedStatement stm1 = conn.prepareStatement("INSERT INTO account(accName,password) VALUES(?,?)");
-           stm1.setString(1, a.getAccName());
-           stm1.setString(2, a.getPassword());
-           stm1.executeUpdate();
+           conn.setAutoCommit(false);
+           PreparedStatement stm1 = conn.prepareStatement("INSERT INTO account(id,accName,password) VALUES(?,?,?)");
+           stm1.setInt(1, a.getId());
+           stm1.setString(2, a.getAccName());
+           stm1.setString(3, a.getPassword());
+           int r = stm1.executeUpdate();
+           try {
+                conn.commit();
+                return true;
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+                return false;
+            }
+            }
+
        }
+// 
+//   public void delAccount(int id) throws SQLException{
+//        try(Connection conn = JdbcUtils.getConn()){
+//          Statement stm1 = conn.createStatement();       
+//          String sql = "DELETE FROM account WHERE id =" + id;
+//          stm1.executeUpdate(sql);
+//          
+//       }
+//        
+//   }
+   //Phuong thuc del account ben test
+     public boolean delAccount(int id) throws SQLException{
+        try(Connection conn = JdbcUtils.getConn()){
+          String sql = "DELETE FROM account WHERE id =?";
+          PreparedStatement stm = conn.prepareCall(sql);
+          stm.setInt(1, id);
+          return stm.executeUpdate() > 0;
+       }
+        
+   }
+     //Phuong thuc update cua test
+       public boolean updateAccount(String acc, String pw, int id) throws SQLException{
+        try(Connection conn = JdbcUtils.getConn()){
+          String sql = "UPDATE account SET accName = ?, password = ?  WHERE id =?";
+          PreparedStatement stm = conn.prepareCall(sql);
+          stm.setString(1, acc);
+          stm.setString(2, pw);
+          stm.setInt(3, id);
+         
+          return stm.executeUpdate() > 0;
+       }
+        
    }
    
-   public void delAccount(int id) throws SQLException{
-        try(Connection conn = JdbcUtils.getConn()){
-          Statement stm1 = conn.createStatement();       
-          String sql = "DELETE FROM account WHERE id =" + id;
-          stm1.executeUpdate(sql);
-       }
-   }
    //phần viết thêm của bên nhóm test
    public void addUserTest(UserTest u) throws SQLException{
        try(Connection conn = JdbcUtils.getConn()){
@@ -61,4 +107,26 @@ public class AccountService {
            stm1.executeUpdate();
        }
    }
+   // cau lenh tim kiem acc theo ten boi team test
+   public List<Account> getAccounts (String kw) throws SQLException {
+        List<Account> results = new ArrayList<>();
+
+        try ( Connection conn = JdbcUtils.getConn()) {
+            String sql = "SELECT * FROM account";
+            if (kw != null && !kw.isEmpty()) {
+                sql += " WHERE accName like concat('%', ?, '%')";
+            }
+            PreparedStatement stm = conn.prepareCall(sql);
+            if (kw != null && !kw.isEmpty())
+                stm.setString(1, kw);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account a = new Account(rs.getInt("id"), rs.getString("accName"), rs.getString("password"));
+                results.add(a);
+            }
+        }
+
+        return results;
+    }
+   
 }
